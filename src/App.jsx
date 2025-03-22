@@ -1,9 +1,20 @@
-/**
- * Goal: Build out the main parts of our app
- * 
- * Challenge: Add a header with the game title
- * and description. Startin' out easy 🙂🚶‍➡️
- */
+import { languages } from './languages.js'
+
+const languageChips = languages.map(language => {
+  const styles = {
+      color: language.color,
+      backgroundColor: language.backgroundColor
+  }
+  return (
+      <span 
+        style={styles}
+        className="chip"
+        key={language.name}
+      >
+        {language.name}
+      </span>
+  )
+})
 
 export default function AssemblyEndgame() {
     return (
@@ -15,6 +26,9 @@ export default function AssemblyEndgame() {
             <section className="status-section">
                 <h2>You Win!</h2>
                 <p>Well done! 🎉</p>
+            </section>
+            <section className="language-chips">
+                {languageChips}
             </section>
         </main>
     )
