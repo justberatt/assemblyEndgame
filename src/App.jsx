@@ -1,9 +1,26 @@
 import { languages } from './languages.js'
 import { useState } from 'react'
-import Letter from './components/Letter.jsx'
 
 export default function AssemblyEndgame() {
   const [currentWord, setCurrentWord] = useState("react")
+  const [guessedLetters, setGuessedLetters] = useState([])
+  console.log(guessedLetters)
+
+  function addGuessedLetter(letter) {
+      setGuessedLetters(prevLetters => 
+          prevLetters.includes(letter) ? // We do this so that if the clicked letter exists, it doesn't get added over and over again on each click
+              prevLetters : 
+              [...prevLetters, letter]
+
+          // We can achieve the same using a set because set doesn't allow duplicates
+          // Here we don't really NEED to use a Set but it is a nice approach (faster also - not neccessarily in this case, but usually)
+          /*
+          const lettersSet = new Set(prevLetters)
+            lettersSet.add(letter)
+            return Array.from(lettersSet) 
+          */
+      )
+  }
 
   const alphabet = "abcdefghijklmnopqrstuvwxyz"
 
@@ -27,8 +44,8 @@ export default function AssemblyEndgame() {
     )
   })
 
-  const alphabetLetters = alphabet.toUpperCase().split('').map((letter, index) => {
-    return <Letter key={index} value={letter} />
+  const alphabetLetters = alphabet.toUpperCase().split('').map(letter => {
+    return <button key={letter} onClick={() => addGuessedLetter(letter)} className="alphabetLetterBtn">{letter}</button>
   })
 
   return (
