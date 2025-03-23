@@ -86,3 +86,20 @@ header > p {
   height: 40px;
   border-bottom: 1px solid #F9F4DA;
 }
+
+.alphabetLetters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+  max-width: 480px;
+}
+
+.alphabetLetterBtn {
+  background-color: #FCBA29;
+  border: 1px solid £D7D7D7;
+  border-radius: 4px;
+  padding: 6px;
+  width: 40px;
+  height: 40px;
+}
