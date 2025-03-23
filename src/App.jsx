@@ -46,6 +46,7 @@ export default function AssemblyEndgame() {
           </section>
           <section className='letters'>{letters}</section>
           <section className='alphabetLetters'>{alphabetLetters}</section>
+          <button className="new-game">New Game</button>
       </main>
   )
 }
