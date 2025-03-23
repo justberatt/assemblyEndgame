@@ -27,8 +27,8 @@ export default function AssemblyEndgame() {
     )
   })
 
-  const alphabetLetters = alphabet.toUpperCase().split('').map(letter => {
-    return <Letter value={letter} />
+  const alphabetLetters = alphabet.toUpperCase().split('').map((letter, index) => {
+    return <Letter key={index} value={letter} />
   })
 
   return (
