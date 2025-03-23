@@ -1,8 +1,11 @@
 import { languages } from './languages.js'
 import { useState } from 'react'
+import Letter from './components/Letter.jsx'
 
 export default function AssemblyEndgame() {
   const [currentWord, setCurrentWord] = useState("react")
+
+  const alphabet = "abcdefghijklmnopqrstuvwxyz"
 
   const letters = currentWord.toUpperCase().split('').map((letter, index) => (
       <span key={index} className='letter'>{letter}</span> // We are only index as a key here because we will not rearrange the letters, otherwise it is not recommended
@@ -24,6 +27,10 @@ export default function AssemblyEndgame() {
     )
   })
 
+  const alphabetLetters = alphabet.toUpperCase().split('').map(letter => {
+    return <Letter value={letter} />
+  })
+
   return (
       <main>
           <header>
@@ -38,6 +45,7 @@ export default function AssemblyEndgame() {
               {languageChips}
           </section>
           <section className='letters'>{letters}</section>
+          <section className='alphabetLetters'>{alphabetLetters}</section>
       </main>
   )
 }
