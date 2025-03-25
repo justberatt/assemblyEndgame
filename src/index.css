@@ -119,3 +119,11 @@ button.new-game {
   margin-inline: auto;
   cursor: pointer;
 }
+
+button.btn-included {
+  background-color: #10A95B;
+}
+
+button.btn-notIncluded {
+  background-color: #EC5D49;
+}
