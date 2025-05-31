@@ -4,15 +4,26 @@ import clsx from 'clsx'
 
 
 export default function AssemblyEndgame() {
-  const [currentWord, setCurrentWord] = useState("react")
-  const [guessedLetters, setGuessedLetters] = useState([])
-  
+  // State values
+    const [currentWord, setCurrentWord] = useState("react")
+    const [guessedLetters, setGuessedLetters] = useState([])
+    
+    // Derived values
+
+    // This will count the number of wrong guesses by
+    // checking how many letters in guessedLetters are not included in currentWord
+    const wrongGuessCount = guessedLetters.filter(letter => !currentWord.includes(letter)).length;
+    console.log(wrongGuessCount);
+    
+    
+    // Static values
+    const alphabet = "abcdefghijklmnopqrstuvwxyz"
+
   function addGuessedLetter(letter) {
       setGuessedLetters(prevLetters => 
           prevLetters.includes(letter) ? // We do this so that if the clicked letter exists, it doesn't get added over and over again on each click
               prevLetters : 
               [...prevLetters, letter]
-
           // We can achieve the same using a set because set doesn't allow duplicates
           // Here we don't really NEED to use a Set but it is a nice approach (faster also - not neccessarily in this case, but usually)
           /*
@@ -22,12 +33,6 @@ export default function AssemblyEndgame() {
           */
       )
   }
-
-  const alphabet = "abcdefghijklmnopqrstuvwxyz"
-
-  const letters = currentWord.split('').map((letter, index) => (
-      <span key={index} className='letter'>{letter.toUpperCase()}</span> // We are only index as a key here because we will not rearrange the letters, otherwise it is not recommended
-    ))
 
   const languageChips = languages.map(language => {
     const styles = {
@@ -45,9 +50,22 @@ export default function AssemblyEndgame() {
     )
   })
 
-  const alphabetLetters = alphabet.toUpperCase().split('').map(letter => {
+  const letters = currentWord.split('').map((letter, index) => {
+    return (
+      <span
+        key={index} // We are only using index as a key here because we will not rearrange the letters, otherwise it is not recommended
+        className='letter'
+      >
+        {
+          guessedLetters.includes(letter) ? letter.toUpperCase() : ""
+        }
+      </span>
+    )
+  })
+
+  const alphabetLetters = alphabet.split('').map(letter => {
     const isGuessed = guessedLetters.includes(letter) // Check if the letter has been guessed
-    const isInWord = currentWord.toUpperCase().includes(letter) // Check if the letter is in the word
+    const isInWord = currentWord.includes(letter) // Check if the letter is in the word
     
     const buttonClass = clsx("alphabetLetterBtn", {
         'btn-included': isGuessed && isInWord, // If guessed (clicked by the user) and in the word (we enable it (green background color))
@@ -60,7 +78,7 @@ export default function AssemblyEndgame() {
         onClick={() => addGuessedLetter(letter)}
         className={buttonClass}
       >
-        {letter}
+        {letter.toUpperCase()}
       </button>
     )
   })
