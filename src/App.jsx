@@ -15,7 +15,6 @@ export default function AssemblyEndgame() {
     const wrongGuessCount = guessedLetters.filter(letter => !currentWord.includes(letter)).length;
     console.log(wrongGuessCount);
     
-    
     // Static values
     const alphabet = "abcdefghijklmnopqrstuvwxyz"
 
