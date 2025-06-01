@@ -34,24 +34,16 @@ export default function AssemblyEndgame() {
   }
 
   const languageChips = languages.map((language, index) => {
-   if (index < wrongGuessCount) {
-            return (
-            <span
-                className="chip lost"
-                key={index}
-            >
-                {language.name}
-            </span>
-            )
-        }
+   const isLanguageLost = index < wrongGuessCount
     const styles = {
         color: language.color,
         backgroundColor: language.backgroundColor
     }
+  const className = clsx("chip", isLanguageLost && "lost") // If the language is lost, we add the 'lost' class to it
     return (
         <span 
           style={styles}
-          className="chip"
+          className={className}
           key={language.name}
         >
           {language.name}
