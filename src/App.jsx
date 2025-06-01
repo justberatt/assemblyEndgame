@@ -8,15 +8,15 @@ export default function AssemblyEndgame() {
     const [currentWord, setCurrentWord] = useState("react")
     const [guessedLetters, setGuessedLetters] = useState([])
     
-    // Derived values
+  // Derived values
 
-    // This will count the number of wrong guesses by
-    // checking how many letters in guessedLetters are not included in currentWord
-    const wrongGuessCount = guessedLetters.filter(letter => !currentWord.includes(letter)).length;
-    console.log(wrongGuessCount);
-    
-    // Static values
-    const alphabet = "abcdefghijklmnopqrstuvwxyz"
+  // This will count the number of wrong guesses by
+  // checking how many letters in guessedLetters are not included in currentWord
+  const wrongGuessCount = guessedLetters.filter(letter => !currentWord.includes(letter)).length;
+
+  
+  // Static values
+  const alphabet = "abcdefghijklmnopqrstuvwxyz"
 
   function addGuessedLetter(letter) {
       setGuessedLetters(prevLetters => 
@@ -33,7 +33,17 @@ export default function AssemblyEndgame() {
       )
   }
 
-  const languageChips = languages.map(language => {
+  const languageChips = languages.map((language, index) => {
+   if (index < wrongGuessCount) {
+            return (
+            <span
+                className="chip lost"
+                key={index}
+            >
+                {language.name}
+            </span>
+            )
+        }
     const styles = {
         color: language.color,
         backgroundColor: language.backgroundColor
