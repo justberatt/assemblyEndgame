@@ -2,6 +2,7 @@ import { languages } from './languages.js'
 import { useState } from 'react'
 import clsx from 'clsx'
 
+console.log(languages.length)
 
 export default function AssemblyEndgame() {
   // State values
@@ -13,6 +14,10 @@ export default function AssemblyEndgame() {
   // This will count the number of wrong guesses by
   // checking how many letters in guessedLetters are not included in currentWord
   const wrongGuessCount = guessedLetters.filter(letter => !currentWord.includes(letter)).length;
+  const isGameWon = 
+        currentWord.split("").every(letter => guessedLetters.includes(letter))
+    const isGameLost = wrongGuessCount >= languages.length - 1
+    const isGameOver = isGameWon || isGameLost
 
   
   // Static values
@@ -39,7 +44,7 @@ export default function AssemblyEndgame() {
         color: language.color,
         backgroundColor: language.backgroundColor
     }
-  const className = clsx("chip", isLanguageLost && "lost") // If the language is lost, we add the 'lost' class to it
+    const className = clsx("chip", isLanguageLost && "lost") // If the language is lost, we add the 'lost' class to it
     return (
         <span 
           style={styles}
@@ -99,7 +104,10 @@ export default function AssemblyEndgame() {
           </section>
           <section className='letters'>{letters}</section>
           <section className='alphabetLetters'>{alphabetLetters}</section>
-          <button className="new-game">New Game</button>
+          {
+            isGameOver &&
+            <button className="new-game">New Game</button>
+          }
       </main>
   )
 }
