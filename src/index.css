@@ -31,8 +31,7 @@ header > p {
   color: #8E8E8E;
 }
 
-.status-section {
-    background-color: #10A95B;
+.game-status {
     border-radius: 4px;
     padding: .6em;
     margin-block: 30px;
@@ -42,17 +41,26 @@ header > p {
     align-items: center;
 }
 
-.status-section * {
+.game-status * {
   color: #F9F4DA;
   margin: 0;
   font-weight: 500;
 }
 
-.status-section > h2{
-    font-size: 1.25rem;
+.game-status.game-won {
+    background-color: #10A95B;
 }
 
-.status-section > p {
+.game-status.game-lost {
+    background-color: #BA2A2A;
+}
+
+.game-status > h2{
+    font-size: 1.25rem;
+    margin: 5px;
+}
+
+.game-status > p {
     margin-top: 3px;
 }
 
