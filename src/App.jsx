@@ -5,11 +5,11 @@ import clsx from 'clsx'
 console.log(languages.length)
 
 export default function AssemblyEndgame() {
-  // State values
+  // 🌱 State values 
     const [currentWord, setCurrentWord] = useState("react")
     const [guessedLetters, setGuessedLetters] = useState([])
     
-  // Derived values
+  // 🧪 Derived values
 
   // This will count the number of wrong guesses by
   // checking how many letters in guessedLetters are not included in currentWord
@@ -20,7 +20,7 @@ export default function AssemblyEndgame() {
     const isGameOver = isGameWon || isGameLost
 
   
-  // Static values
+  // 💎 Static values
   const alphabet = "abcdefghijklmnopqrstuvwxyz"
 
   function addGuessedLetter(letter) {
@@ -93,6 +93,28 @@ export default function AssemblyEndgame() {
     'game-won': isGameWon,
     'game-lost': isGameLost
   })
+
+  function renderGameStatus() {
+    if (!isGameOver) {
+      return null; // If the game is not over, we don't render anything
+    }
+
+    if (isGameWon) {
+      return (
+        <>
+          <h2>You win!</h2>
+          <p>Well done! 🎉</p>
+        </>
+      )
+    } else {
+      return (
+        <>
+          <h2>Game Over!</h2>
+          <p>You lose! Better start learning Assembly!</p>
+        </>
+      )
+    }
+  }
   
   return (
       <main>
@@ -101,20 +123,7 @@ export default function AssemblyEndgame() {
             <p>Guess the word within 8 attempts to keep the programming world safe from Assembly!</p>
           </header>
           <section className={gameStatusClass}>
-            { isGameOver ?
-                isGameLost ?
-                  <>
-                    <h2>Game Over!</h2>
-                    <p>You loose! Better start learning Assembly!</p>
-                  </>
-                  :
-                  <>
-                    <h2>You Win!</h2>
-                    <p>Well done! 🎉</p>
-                  </>
-                :
-                null
-              }
+            { renderGameStatus() }
           </section>
           <section className="language-chips">
               {languageChips}
