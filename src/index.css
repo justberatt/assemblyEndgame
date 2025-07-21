@@ -35,10 +35,13 @@ header > p {
     border-radius: 4px;
     padding: .6em;
     margin-block: 30px;
+    width: 100%;
+    min-height: 60px;
     
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
 }
 
 .game-status * {
@@ -55,6 +58,10 @@ header > p {
     background-color: #BA2A2A;
 }
 
+.game-status.farewell {
+    background-color: #7A5EA7;
+}
+
 .game-status > h2{
     font-size: 1.25rem;
     margin: 5px;
@@ -62,6 +69,20 @@ header > p {
 
 .game-status > p {
     margin-top: 3px;
+}
+
+section.game-status > p.farewell-msg {
+    font-style: italic;
+    font-weight: 400;
+}
+
+.game-on {
+  background-color: #7A5EA7; 
+  padding: 20px 0;
+}
+
+.farewell-msg > h2 {
+    font-size: 1.25rem;
 }
 
 .language-chips {
