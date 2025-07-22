@@ -172,3 +172,8 @@ button.btn-included {
 button.btn-notIncluded {
   background-color: #EC5D49;
 }
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
