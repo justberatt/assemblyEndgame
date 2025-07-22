@@ -5,8 +5,8 @@ import { getFarewellText, chooseRandomWord }  from './utils.js'
 
 export default function AssemblyEndgame() {
   // 🌱 State values 
-    const [currentWord, setCurrentWord] = useState(() => chooseRandomWord()) // lazy state initialization to avoid choosing a new word on every render
-    const [guessedLetters, setGuessedLetters] = useState([])
+  const [currentWord, setCurrentWord] = useState(() => chooseRandomWord()) // lazy state initialization to avoid choosing a new word on every render
+  const [guessedLetters, setGuessedLetters] = useState([])
     
   // 🧪 Derived values
 
@@ -14,12 +14,11 @@ export default function AssemblyEndgame() {
   // checking how many letters in guessedLetters are not included in currentWord
   const numGuessesLeft = languages.length - 1
   const wrongGuessCount = guessedLetters.filter(letter => !currentWord.includes(letter)).length;
-  const isGameWon = 
-        currentWord.split("").every(letter => guessedLetters.includes(letter))
-    const isGameLost = wrongGuessCount >= numGuessesLeft
-    const isGameOver = isGameWon || isGameLost
-    const lastGuessedLetter = guessedLetters[guessedLetters.length - 1]
-    const isLastGuessIncorrect = lastGuessedLetter && !currentWord.includes(lastGuessedLetter)
+  const isGameWon = currentWord.split("").every(letter => guessedLetters.includes(letter))
+  const isGameLost = wrongGuessCount >= numGuessesLeft
+  const isGameOver = isGameWon || isGameLost
+  const lastGuessedLetter = guessedLetters[guessedLetters.length - 1]
+  const isLastGuessIncorrect = lastGuessedLetter && !currentWord.includes(lastGuessedLetter)
     
   // 💎 Static values
   const alphabet = "abcdefghijklmnopqrstuvwxyz"
@@ -63,17 +62,26 @@ export default function AssemblyEndgame() {
   })
 
   const letters = currentWord.split('').map((letter, index) => {
+    const isUnguessedAndGameLost = isGameLost && !guessedLetters.includes(letter)
+    const styles = {
+      color: isUnguessedAndGameLost ? '#EC5D49' : 'inherit'
+    }
+    
     return (
       <span
-        key={index} // We are only using index as a key here because we will not rearrange the letters, otherwise it is not recommended
+        key={index}
         className='letter'
+        style={styles}
       >
         {
-          guessedLetters.includes(letter) ? letter.toUpperCase() : ""
+          // Show letter if it was guessed OR if game is lost
+          (guessedLetters.includes(letter) || isGameLost) 
+            ? letter.toUpperCase() 
+            : ""
         }
       </span>
     )
-  })
+})
 
   const alphabetLetters = alphabet.split('').map(letter => {
     const isGuessed = guessedLetters.includes(letter) // Check if the letter has been guessed
@@ -173,7 +181,7 @@ export default function AssemblyEndgame() {
             isGameOver &&
             <button
               className="new-game"
-              onClick={startNewGame}  
+              onClick={startNewGame}
             >New Game</button>
           }
       </main>
