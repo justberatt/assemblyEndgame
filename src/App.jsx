@@ -7,7 +7,6 @@ export default function AssemblyEndgame() {
   // 🌱 State values 
     const [currentWord, setCurrentWord] = useState("react")
     const [guessedLetters, setGuessedLetters] = useState([])
-    const [farewellMessage, setFarewellMessage] = useState("")
     
   // 🧪 Derived values
 
@@ -25,7 +24,6 @@ export default function AssemblyEndgame() {
   const alphabet = "abcdefghijklmnopqrstuvwxyz"
 
   function addGuessedLetter(letter) {
-    const isWrongGuess = !currentWord.includes(letter)
       setGuessedLetters(prevLetters => 
           prevLetters.includes(letter) ? // We do this so that if the clicked letter exists, it doesn't get added over and over again on each click
               prevLetters : 
@@ -38,9 +36,6 @@ export default function AssemblyEndgame() {
             return Array.from(lettersSet) 
           */
       )
-      if (isWrongGuess) {
-        setFarewellMessage(getFarewellText(languages[wrongGuessCount].name))
-      }
   }
 
   const languageChips = languages.map((language, index) => {
@@ -103,7 +98,9 @@ export default function AssemblyEndgame() {
   function renderGameStatus() {
     if (!isGameOver && isLastGuessIncorrect) {
       return (
-        <p className='farewell-msg'>{farewellMessage}</p>
+        <p className='farewell-msg'>
+          {getFarewellText(languages[wrongGuessCount - 1].name)}
+        </p>
       )
     }
 
@@ -133,7 +130,7 @@ export default function AssemblyEndgame() {
             <p>Guess the word within 8 attempts to keep the programming world safe from Assembly!</p>
           </header>
           <section className={gameStatusClass}>
-            { renderGameStatus() }
+            { renderGameStatus()}
           </section>
           <section className="language-chips">
               {languageChips}
