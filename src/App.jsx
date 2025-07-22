@@ -12,10 +12,11 @@ export default function AssemblyEndgame() {
 
   // This will count the number of wrong guesses by
   // checking how many letters in guessedLetters are not included in currentWord
+  const numGuessesLeft = languages.length - 1
   const wrongGuessCount = guessedLetters.filter(letter => !currentWord.includes(letter)).length;
   const isGameWon = 
         currentWord.split("").every(letter => guessedLetters.includes(letter))
-    const isGameLost = wrongGuessCount >= languages.length - 1
+    const isGameLost = wrongGuessCount >= numGuessesLeft
     const isGameOver = isGameWon || isGameLost
     const lastGuessedLetter = guessedLetters[guessedLetters.length - 1]
     const isLastGuessIncorrect = lastGuessedLetter && !currentWord.includes(lastGuessedLetter)
@@ -81,9 +82,11 @@ export default function AssemblyEndgame() {
     return (
       <button
         key={letter}
-        onClick={() => addGuessedLetter(letter)}
         className={buttonClass}
         disabled={isGameOver && true}
+        aria-disabled={guessedLetters.includes(letter)}
+        aria-label={`Letter ${letter}`}
+        onClick={() => addGuessedLetter(letter)}
       >
         {letter.toUpperCase()}
       </button>
@@ -130,13 +133,36 @@ export default function AssemblyEndgame() {
             <h1>Assembly: Endgame</h1>
             <p>Guess the word within 8 attempts to keep the programming world safe from Assembly!</p>
           </header>
-          <section className={gameStatusClass}>
+          <section
+            aria-live="polite" // polite simply means it is not going to interrupt the rest of whatever it is currently reading
+            role="status"
+            className={gameStatusClass}
+            >
             { renderGameStatus()}
           </section>
           <section className="language-chips">
               {languageChips}
           </section>
           <section className='letters'>{letters}</section>
+
+          {/* Combined vissally-hidden aria-live region for status updates */}
+          <section
+            className="sr-only"
+            aria-live="polite"
+            role="status"
+          >
+            <p>
+              {currentWord.includes(lastGuessedLetter) ? 
+                `Good guess! The letter ${lastGuessedLetter} is in the word.` :
+                `Sorry, the letter ${lastGuessedLetter} is not in the word.`
+              }
+              You have {numGuessesLeft - wrongGuessCount} guesses left.
+            </p>
+            <p>
+              Current word: { currentWord.split("").map(letter => guessedLetters.includes(letter) ? 
+            letter + "." : "blank").join(" ")}
+            </p>
+          </section>
           <section className='alphabetLetters'>{alphabetLetters}</section>
           {
             isGameOver &&
