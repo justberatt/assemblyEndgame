@@ -117,7 +117,6 @@ export default function AssemblyEndgame() {
         <>
           <h2>You win!</h2>
           <p>Well done! 🎉</p>
-          <Confetti />
         </>
       )
     } 
@@ -134,6 +133,13 @@ export default function AssemblyEndgame() {
   
   return (
       <main>
+          {
+                isGameWon && 
+                    <Confetti
+                        recycle={false}
+                        numberOfPieces={1000}
+                    />
+          }
           <header>
             <h1>Assembly: Endgame</h1>
             <p>Guess the word within 8 attempts to keep the programming world safe from Assembly!</p>
