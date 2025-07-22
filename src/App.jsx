@@ -1,12 +1,11 @@
 import { languages } from './languages.js'
 import { useState } from 'react'
 import clsx from 'clsx'
-import { getFarewellText }  from './utils.js'
-import { chooseRandomWord } from './utils.js'
+import { getFarewellText, chooseRandomWord }  from './utils.js'
 
 export default function AssemblyEndgame() {
   // 🌱 State values 
-    const [currentWord, setCurrentWord] = useState(chooseRandomWord())
+    const [currentWord, setCurrentWord] = useState(() => chooseRandomWord()) // lazy state initialization to avoid choosing a new word on every render
     const [guessedLetters, setGuessedLetters] = useState([])
     
   // 🧪 Derived values
