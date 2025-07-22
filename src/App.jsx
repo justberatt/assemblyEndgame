@@ -62,24 +62,14 @@ export default function AssemblyEndgame() {
   })
 
   const letters = currentWord.split('').map((letter, index) => {
-    const isUnguessedAndGameLost = isGameLost && !guessedLetters.includes(letter)
-    const styles = {
-      color: isUnguessedAndGameLost ? '#EC5D49' : 'inherit'
-    }
-    
+    const shouldRevealLetter = isGameLost || guessedLetters.includes(letter)
+    const letterClassName = clsx('letter',
+        isGameLost && !guessedLetters.includes(letter) && "missed-letter"
+    )
     return (
-      <span
-        key={index}
-        className='letter'
-        style={styles}
-      >
-        {
-          // Show letter if it was guessed OR if game is lost
-          (guessedLetters.includes(letter) || isGameLost) 
-            ? letter.toUpperCase() 
-            : ""
-        }
-      </span>
+        <span key={index} className={letterClassName}>
+            {shouldRevealLetter ? letter.toUpperCase() : ""}
+        </span>
     )
 })
 

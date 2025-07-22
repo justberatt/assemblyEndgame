@@ -135,6 +135,10 @@ span.chip.lost::before {
   border-bottom: 1px solid #F9F4DA;
 }
 
+.missed-letter {
+  color: #EC5D49;
+}
+
 .alphabetLetters {
   display: flex;
   flex-wrap: wrap;
