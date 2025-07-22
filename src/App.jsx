@@ -1,13 +1,13 @@
 import { languages } from './languages.js'
 import { useState } from 'react'
 import clsx from 'clsx'
-
-console.log(languages.length)
+import { getFarewellText }  from './utils.js'
 
 export default function AssemblyEndgame() {
   // 🌱 State values 
     const [currentWord, setCurrentWord] = useState("react")
     const [guessedLetters, setGuessedLetters] = useState([])
+    const [farewellMessage, setFarewellMessage] = useState("")
     
   // 🧪 Derived values
 
@@ -18,12 +18,14 @@ export default function AssemblyEndgame() {
         currentWord.split("").every(letter => guessedLetters.includes(letter))
     const isGameLost = wrongGuessCount >= languages.length - 1
     const isGameOver = isGameWon || isGameLost
-
-  
+    const lastGuessedLetter = guessedLetters[guessedLetters.length - 1]
+    const isLastGuessIncorrect = lastGuessedLetter && !currentWord.includes(lastGuessedLetter)
+    
   // 💎 Static values
   const alphabet = "abcdefghijklmnopqrstuvwxyz"
 
   function addGuessedLetter(letter) {
+    const isWrongGuess = !currentWord.includes(letter)
       setGuessedLetters(prevLetters => 
           prevLetters.includes(letter) ? // We do this so that if the clicked letter exists, it doesn't get added over and over again on each click
               prevLetters : 
@@ -36,10 +38,13 @@ export default function AssemblyEndgame() {
             return Array.from(lettersSet) 
           */
       )
+      if (isWrongGuess) {
+        setFarewellMessage(getFarewellText(languages[wrongGuessCount].name))
+      }
   }
 
   const languageChips = languages.map((language, index) => {
-   const isLanguageLost = index < wrongGuessCount
+    const isLanguageLost = index < wrongGuessCount
     const styles = {
         color: language.color,
         backgroundColor: language.backgroundColor
@@ -91,12 +96,15 @@ export default function AssemblyEndgame() {
 
   const gameStatusClass = clsx("game-status", {
     'game-won': isGameWon,
-    'game-lost': isGameLost
+    'game-lost': isGameLost,
+    'farewell': !isGameOver && isLastGuessIncorrect
   })
 
   function renderGameStatus() {
-    if (!isGameOver) {
-      return null; // If the game is not over, we don't render anything
+    if (!isGameOver && isLastGuessIncorrect) {
+      return (
+        <p className='farewell-msg'>{farewellMessage}</p>
+      )
     }
 
     if (isGameWon) {
@@ -106,7 +114,8 @@ export default function AssemblyEndgame() {
           <p>Well done! 🎉</p>
         </>
       )
-    } else {
+    } 
+    if (isGameLost) {
       return (
         <>
           <h2>Game Over!</h2>
@@ -114,6 +123,7 @@ export default function AssemblyEndgame() {
         </>
       )
     }
+    return null;
   }
   
   return (
