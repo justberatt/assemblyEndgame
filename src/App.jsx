@@ -2,6 +2,7 @@ import { languages } from './languages.js'
 import { useState } from 'react'
 import clsx from 'clsx'
 import { getFarewellText, chooseRandomWord }  from './utils.js'
+import Confetti from 'react-confetti'
 
 export default function AssemblyEndgame() {
   // 🌱 State values 
@@ -116,6 +117,7 @@ export default function AssemblyEndgame() {
         <>
           <h2>You win!</h2>
           <p>Well done! 🎉</p>
+          <Confetti />
         </>
       )
     } 
